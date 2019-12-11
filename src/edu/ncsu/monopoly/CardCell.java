@@ -2,13 +2,15 @@ package edu.ncsu.monopoly;
 
 public class CardCell extends Cell {
     private int type;
+	private boolean available = true;
     
     public CardCell(int type, String name) {
         setName(name);
         this.type = type;
     }
     
-    public void playAction() {
+    public boolean playAction(String msg) {
+    	return true;
     }
     
     public int getType() {

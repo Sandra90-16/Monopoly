@@ -25,8 +25,8 @@ public class Player {
 		}
 	}
 
-    public void buyProperty(Cell property, int amount) {
-        property.setOwner(this);
+    public void buyProperty(IOwnable property, int amount) {
+        property.setPropietary(this);
         if(property instanceof PropertyCell) {
             PropertyCell cell = (PropertyCell)property;
             properties.add(cell);
@@ -55,7 +55,7 @@ public class Player {
 
 	public boolean checkProperty(String property) {
 		for(int i=0;i<properties.size();i++) {
-			Cell cell = (Cell)properties.get(i);
+			IOwnable cell = (IOwnable)properties.get(i);
 			if(cell.getName().equals(property)) {
 				return true;
 			}
@@ -67,7 +67,7 @@ public class Player {
 	public void exchangeProperty(Player player) {
 		for(int i = 0; i < getPropertyNumber(); i++ ) {
 			PropertyCell cell = getProperty(i);
-			cell.setOwner(player);
+			cell.setPropietary(player);
 			if(player == null) {
 				cell.setAvailable(true);
 				cell.setNumHouses(0);
@@ -82,12 +82,12 @@ public class Player {
 		properties.clear();
 	}
     
-    public Cell[] getAllProperties() {
+    public IOwnable[] getAllProperties() {
         ArrayList list = new ArrayList();
         list.addAll(properties);
         list.addAll(utilities);
         list.addAll(railroads);
-        return (Cell[])list.toArray(new Cell[list.size()]);
+        return (IOwnable[])list.toArray(new IOwnable[list.size()]);
     }
 
 	public int getMoney() {
@@ -102,7 +102,7 @@ public class Player {
             if(!(color.equals(RailRoadCell.COLOR_GROUP)) && !(color.equals(UtilityCell.COLOR_GROUP))) {
     			Integer num = (Integer)colorGroups.get(color);
     			GameBoard gameBoard = GameMaster.instance().getGameBoard();
-    			if(num.intValue() == gameBoard.getPropertyNumberForColor(color)) {
+    			if(num.intValue() == gameBoard.getPropertyNumberForColor(color, true)) {
     				monopolies.add(color);
     			}
             }
@@ -221,8 +221,8 @@ public class Player {
 	    buyProperty(cell, cell.getPrice());
 	}
 
-    public void sellProperty(Cell property, int amount) {
-        property.setOwner(null);
+    public void sellProperty(IOwnable property, int amount) {
+        property.setPropietary(null);
         if(property instanceof PropertyCell) {
             properties.remove(property);
         }

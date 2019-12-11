@@ -1,16 +1,18 @@
 package edu.ncsu.monopoly;
 
-public abstract class Cell {
+public abstract class Cell implements IOwnable {
 	private boolean available = true;
 	private String name;
-	protected Player owner;
+	protected Player propietary;
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	public Player getOwner() {
-		return owner;
+	@Override
+	public Player getPropietary() {
+		return propietary;
 	}
 	
 	public int getPrice() {
@@ -21,7 +23,7 @@ public abstract class Cell {
 		return available;
 	}
 	
-	public abstract void playAction();
+	public abstract boolean playAction(String msg);
 
 	public void setAvailable(boolean available) {
 		this.available = available;
@@ -31,8 +33,9 @@ public abstract class Cell {
 		this.name = name;
 	}
 
-	public void setOwner(Player owner) {
-		this.owner = owner;
+	@Override
+	public void setPropietary(Player owner) {
+		this.propietary = owner;
 	}
     
     public String toString() {
